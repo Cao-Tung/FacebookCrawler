@@ -14,18 +14,47 @@ def some_action(post):
 # here: https://developers.facebook.com/tools/explorer/
 app_id = ""
 app_secret = ""
-access_token = app_id + "|" + app_secret
+# access_token = app_id + "|" + app_secret
+access_token = "319995671738159|PJzTe8w_pPTFeiz5R-_yc5mNUHk"
 # Look at Bill Gates's profile for this example by using his Facebook id.
-user = 'neuconfessions'
+user = 'thoitietHN'
 
 graph = facebook.GraphAPI(access_token)
 profile = graph.get_object(user)
 posts = graph.get_connections(profile['id'], 'posts')
+comments = graph.get_connections(posts['data'][3]['id'], 'comments', limit = "100")
 
-print(posts['data'][0]['id'])
-comments = graph.get_connections(posts['data'][1]['id'], 'comments')
-for i in range(0,10):
-    print(comments['data'][i]['message'])
+#
+# print(posts['data'][0]['id'])
+# comments = graph.get_connections(posts['data'][1]['id'], 'comments')
+# for i in range(0,50):
+#     print(comments['data'][i]['message'])
+count = 0
+for i in range(0,100):
+    count = count + 1
+    try:
+        print(comments['data'][i]['message'])
+        with open("fb.txt", "a") as commentFile:
+
+            comment = graph.get_connections(id=comments['data'][i]['id'], connection_name='comments')
+            if len(comment['data']) >= 1:
+                commentFile.write("Q:" + comments['data'][i]['message'] + "\n")
+                print("Reply : \n")
+                # print("LENGHT")
+                # print(comment)
+                for j in range(0,1):
+                    try:
+                        print(comment['data'][j]['message'])
+                        commentFile.write("A:" + comment['data'][j]['message'] + "\n")
+                    except IndexError:
+                        pass
+                    continue
+            commentFile.close()
+        print(count)
+        print(".........................")
+    except IndexError:
+        pass
+    continue
 
 # Wrap this block in a while loop so we can keep paginating requests until
 # finished.
