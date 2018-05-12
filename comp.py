@@ -15,9 +15,9 @@ def some_action(post):
 app_id = ""
 app_secret = ""
 # access_token = app_id + "|" + app_secret
-access_token = "319995671738159|PJzTe8w_pPTFeiz5R-_yc5mNUHk"
+access_token = ""
 # Look at Bill Gates's profile for this example by using his Facebook id.
-user = 'thoitietHN'
+user = 'neuconfessions'
 
 graph = facebook.GraphAPI(access_token)
 profile = graph.get_object(user)
@@ -34,7 +34,7 @@ for i in range(0,100):
     count = count + 1
     try:
         print(comments['data'][i]['message'])
-        with open("fb.txt", "a") as commentFile:
+        with open("neuconf.txt", "a") as commentFile:
 
             comment = graph.get_connections(id=comments['data'][i]['id'], connection_name='comments')
             if len(comment['data']) >= 1:

@@ -1,6 +1,10 @@
 # import some Python dependencies
+# python 2
+# import urllib2
 
-import urllib2
+#python 3
+
+import urllib3
 import json
 import datetime
 import csv
@@ -21,11 +25,11 @@ def testFacebookPageData(page_id, access_token):
     url = base + node + parameters
 
     # retrieve data
-    req = urllib2.Request(url)
-    response = urllib2.urlopen(req)
+    req = urllib3.Request(url)
+    response = urllib3.urlopen(req)
     data = json.loads(response.read())
 
-    print json.dumps(data, indent=4, sort_keys=True)
+    print(json.dumps(data, indent=4, sort_keys=True))
 
 
 testFacebookPageData(page_id, access_token)
